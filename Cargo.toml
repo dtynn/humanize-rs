@@ -1,0 +1,7 @@
+[package]
+name = "humanize-rs"
+version = "0.1.0"
+authors = ["dtynn <dtynn@163.com>"]
+keywords = ["humanize", "human", "human-friendly", "readable", "parser"]
+
+[dependencies]

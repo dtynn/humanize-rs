@@ -4,12 +4,12 @@ description = """
     For parsing human-readable strings to some types.
 """
 readme = "README.md"
-license = "MIT"
 license-file = "LICENSE"
-version = "0.1.0"
+version = "0.1.1"
 homepage = "https://github.com/dtynn/humanize-rs"
 documentation = "https://docs.rs/humanize-rs"
 authors = ["dtynn <dtynn@163.com>"]
 keywords = ["humanize", "human", "human-friendly", "readable", "parser"]
 
 [dependencies]
+num-traits = "0.2"

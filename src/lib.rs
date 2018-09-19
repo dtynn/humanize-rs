@@ -4,8 +4,10 @@
 
 use std::error::Error;
 use std::fmt;
+extern crate num_traits;
 
 pub mod bytes;
+pub mod num;
 
 /// Error parsing formatted strings
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]

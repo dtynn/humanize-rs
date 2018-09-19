@@ -12,9 +12,21 @@
 //! assert_eq!(gigabytes1, gigabytes2);
 //! ```
 
+use super::num::{cast, Int};
 use super::ParseError;
 use std::fmt;
 use std::str::FromStr;
+
+const IBYTES: [u64; 7] = [1, 1 << 10, 1 << 20, 1 << 30, 1 << 40, 1 << 50, 1 << 60];
+const BYTES: [u64; 7] = [
+    1,
+    1_000,
+    1_000_000,
+    1_000_000_000,
+    1_000_000_000_000,
+    1_000_000_000_000_000,
+    1_000_000_000_000_000_000,
+];
 
 /// Bytes units, like "KB", "KiB"
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -60,22 +72,24 @@ pub enum Unit {
 }
 
 impl Unit {
-    fn size(&self) -> usize {
-        match self {
-            Unit::Byte => 1,
-            Unit::KiByte => 1024_usize.pow(1),
-            Unit::MiByte => 1024_usize.pow(2),
-            Unit::GiByte => 1024_usize.pow(3),
-            Unit::TiByte => 1024_usize.pow(4),
-            Unit::PiByte => 1024_usize.pow(5),
-            Unit::EiByte => 1024_usize.pow(6),
-            Unit::KByte => 1000_usize.pow(1),
-            Unit::MByte => 1000_usize.pow(2),
-            Unit::GByte => 1000_usize.pow(3),
-            Unit::TByte => 1000_usize.pow(4),
-            Unit::PByte => 1000_usize.pow(5),
-            Unit::EByte => 1000_usize.pow(6),
-        }
+    fn size<T: Int>(&self) -> Result<T, ParseError> {
+        let v = match self {
+            Unit::Byte => cast(1),
+            Unit::KiByte => cast(IBYTES[1]),
+            Unit::MiByte => cast(IBYTES[2]),
+            Unit::GiByte => cast(IBYTES[3]),
+            Unit::TiByte => cast(IBYTES[4]),
+            Unit::PiByte => cast(IBYTES[5]),
+            Unit::EiByte => cast(IBYTES[6]),
+            Unit::KByte => cast(BYTES[1]),
+            Unit::MByte => cast(BYTES[2]),
+            Unit::GByte => cast(BYTES[3]),
+            Unit::TByte => cast(BYTES[4]),
+            Unit::PByte => cast(BYTES[5]),
+            Unit::EByte => cast(BYTES[6]),
+        }.ok_or(ParseError::Overflow)?;
+
+        Ok(v)
     }
 }
 
@@ -128,7 +142,7 @@ impl FromStr for Unit {
 ///
 /// [`Unit::Byte`]: ./enum.Unit.html#variant.Byte
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub struct Bytes(usize);
+pub struct Bytes<T: Int = usize>(T);
 
 impl Bytes {
     /// Returns a `Bytes` with a numeric value and a specific unit, or a `ParseError` if exists,
@@ -143,14 +157,15 @@ impl Bytes {
     /// ```
     ///
     /// [`ParseError::Overflow`]: ../enum.ParseError.html#variant.Overflow
-    pub fn new(value: usize, unit: Unit) -> Result<Bytes, ParseError> {
-        let size = value.checked_mul(unit.size()).ok_or(ParseError::Overflow)?;
+    pub fn new<T: Int>(value: T, unit: Unit) -> Result<Bytes<T>, ParseError> {
+        let unit_size = unit.size::<T>()?;
+        let size = value.checked_mul(&unit_size).ok_or(ParseError::Overflow)?;
 
         Ok(Bytes(size))
     }
 }
 
-impl FromStr for Bytes {
+impl<T: Int> FromStr for Bytes<T> {
     type Err = ParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -169,8 +184,8 @@ impl FromStr for Bytes {
         }
 
         let (vstr, ustr) = input.split_at(unit_index);
-        let unit = ustr.trim().to_lowercase().parse::<Unit>()?;
-        let value = vstr.parse::<usize>().or(Err(ParseError::InvalidValue))?;
+        let unit = ustr.trim().to_lowercase().parse()?;
+        let value = vstr.parse::<T>().or(Err(ParseError::InvalidValue))?;
 
         Bytes::new(value, unit)
     }

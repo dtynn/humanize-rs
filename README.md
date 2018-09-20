@@ -38,3 +38,9 @@ use std::time::Duration;
 
 assert_eq!(parse("1h 30m 71s"), Ok(Duration::from_secs(60 * 90 + 71)));
 ```
+
+
+
+### Contributing
+
+Any PRs or issues are welcomed.

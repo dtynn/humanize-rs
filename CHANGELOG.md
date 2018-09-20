@@ -1,3 +1,6 @@
+### v0.1.3
+add method `size` for `Bytes`
+
 ### v0.1.2
 implement duration parsing
 

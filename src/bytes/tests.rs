@@ -90,3 +90,23 @@ fn test_int_types() {
     #[cfg(has_i128)]
     assert_eq!("1 B".parse::<Bytes<u128>>(), Ok(Bytes::<u128>(1)));
 }
+
+#[test]
+fn test_size() {
+    assert_eq!("1 B".parse::<Bytes>().unwrap().size(), 1_usize);
+    assert_eq!("1 B".parse::<Bytes<i8>>().unwrap().size(), 1_i8);
+    assert_eq!("1 B".parse::<Bytes<u8>>().unwrap().size(), 1_u8);
+    assert_eq!("1 B".parse::<Bytes<i16>>().unwrap().size(), 1_i16);
+    assert_eq!("1 B".parse::<Bytes<u16>>().unwrap().size(), 1_u16);
+    assert_eq!("1 B".parse::<Bytes<i32>>().unwrap().size(), 1_i32);
+    assert_eq!("1 B".parse::<Bytes<u32>>().unwrap().size(), 1_u32);
+    assert_eq!("1 B".parse::<Bytes<i64>>().unwrap().size(), 1_i64);
+    assert_eq!("1 B".parse::<Bytes<u64>>().unwrap().size(), 1_u64);
+    assert_eq!("1 B".parse::<Bytes<isize>>().unwrap().size(), 1_isize);
+    assert_eq!("1 B".parse::<Bytes<usize>>().unwrap().size(), 1_usize);
+
+    #[cfg(has_i128)]
+    assert_eq!("1 B".parse::<Bytes<i128>>().unwrap().size(), 1_i128);
+    #[cfg(has_i128)]
+    assert_eq!("1 B".parse::<Bytes<u128>>().unwrap().size(), 1_u128);
+}

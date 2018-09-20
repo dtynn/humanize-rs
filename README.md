@@ -29,6 +29,7 @@ use humanize_rs::bytes::{Bytes, Unit};
 let gigabytes1 = Bytes::new(1, Unit::GiByte);
 let gigabytes2 = "1 GiB".parse::<Bytes>();
 assert_eq!(gigabytes1, gigabytes2);
+assert_eq!(gigabytes2.unwrap().size(), 1 << 30);
 ```
 
 #### Duration

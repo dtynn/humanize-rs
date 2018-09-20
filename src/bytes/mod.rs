@@ -10,6 +10,7 @@
 //! let gigabytes1 = Bytes::new(1, Unit::GiByte);
 //! let gigabytes2 = "1 GiB".parse::<Bytes>();
 //! assert_eq!(gigabytes1, gigabytes2);
+//! assert_eq!(gigabytes2.unwrap().size(), 1 << 30);
 //! ```
 
 use super::num::{cast, Int};
@@ -162,6 +163,13 @@ impl Bytes {
         let size = value.checked_mul(&unit_size).ok_or(ParseError::Overflow)?;
 
         Ok(Bytes(size))
+    }
+}
+
+impl<T: Int> Bytes<T> {
+    /// return inner value of Bytes
+    pub fn size(&self) -> T {
+        return self.0;
     }
 }
 

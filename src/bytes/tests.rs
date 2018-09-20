@@ -1,4 +1,5 @@
-use super::{Bytes, ParseError, Unit};
+use super::{Bytes, Unit};
+use ParseError;
 
 #[test]
 fn test_parsing_strings() {

@@ -13,9 +13,9 @@
 //! ```
 
 use super::num::{cast, Int};
-use super::ParseError;
 use std::fmt;
 use std::str::FromStr;
+use ParseError;
 
 const IBYTES: [u64; 7] = [1, 1 << 10, 1 << 20, 1 << 30, 1 << 40, 1 << 50, 1 << 60];
 const BYTES: [u64; 7] = [

@@ -1,3 +1,6 @@
+### v0.1.2
+implement duration parsing
+
 ### v0.1.1
 use `struct Bytes<T: Int = usize>(T)` instead of `struct Bytes(usize)`
 

@@ -5,11 +5,13 @@ description = """
 """
 readme = "README.md"
 license-file = "LICENSE"
-version = "0.1.1"
+version = "0.1.2"
 homepage = "https://github.com/dtynn/humanize-rs"
 documentation = "https://docs.rs/humanize-rs"
+repository = "https://github.com/dtynn/humanize-rs"
 authors = ["dtynn <dtynn@163.com>"]
 keywords = ["humanize", "human", "human-friendly", "readable", "parser"]
+categories = ["parsing"]
 
 [dependencies]
 num-traits = "0.2"

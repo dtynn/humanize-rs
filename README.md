@@ -1,4 +1,7 @@
-### humanize-rs
+## humanize-rs
+[![Crates.io](https://img.shields.io/crates/v/humanize-rs.svg)](https://crates.io/crates/humanize-rs)
+[![Docs](https://docs.rs/humanize-rs/badge.svg)](https://docs.rs/humanize-rs)
+
 This lib aims at converting human-readable strings to specific types.
 It's mainly used in parsing config files.
 

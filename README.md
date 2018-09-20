@@ -5,6 +5,22 @@
 This lib aims at converting human-readable strings to specific types.
 It's mainly used in parsing config files.
 
+### Usage
+1. Add this lib as a dependency
+```
+[dependencies]
+humanize-rs = "0.1"
+```
+
+2. Add the crate reference
+```
+extern crate humanize_rs;
+```
+
+
+### Example
+
+
 #### Bytes
 ```
 use humanize_rs::bytes::{Bytes, Unit};

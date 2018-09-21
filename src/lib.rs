@@ -9,6 +9,7 @@ extern crate num_traits;
 pub mod bytes;
 pub mod duration;
 pub mod num;
+pub mod time;
 
 /// Error parsing formatted strings
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]

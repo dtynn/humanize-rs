@@ -34,6 +34,11 @@ const OFFSETS: [i32; 25] = [
 pub struct TimeZone(i32);
 
 impl TimeZone {
+    /// Returns timezone UTC
+    pub fn utc() -> TimeZone {
+        TimeZone(0)
+    }
+
     /// Returns a timezone with the given hour offset
     pub fn new(hoffset: i32) -> Option<TimeZone> {
         if hoffset < -12 || hoffset > 12 {
@@ -79,7 +84,7 @@ impl FromStr for TimeZone {
             "+10:00" => Ok(TimeZone(OFFSETS[22])),
             "+11:00" => Ok(TimeZone(OFFSETS[23])),
             "+12:00" => Ok(TimeZone(OFFSETS[24])),
-            _ => Err(ParseError::InvalidValue),
+            _ => Err(ParseError::InvalidTimezone),
         }
     }
 }

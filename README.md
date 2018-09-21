@@ -40,6 +40,24 @@ use std::time::Duration;
 assert_eq!(parse("1h 30m 71s"), Ok(Duration::from_secs(60 * 90 + 71)));
 ```
 
+#### RFC3339 Datetime
+```
+use humanize_rs::time::{Time, TimeZone};
+
+assert_eq!(
+    "2018-09-21T16:56:44.234867232+08:00".parse::<Time>(),
+    Ok(Time::from_timetuple(
+        2018,
+        9,
+        21,
+        16,
+        56,
+        44,
+        234867232,
+        TimeZone::new(8).unwrap(),
+    ).unwrap())
+);
+```
 
 
 ### Contributing

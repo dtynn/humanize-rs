@@ -1,3 +1,6 @@
+### v0.1.4
+implement [RFC3339](https://tools.ietf.org/html/rfc3339) datetime parsing
+
 ### v0.1.3
 add method `size` for `Bytes`
 

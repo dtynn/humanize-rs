@@ -12,7 +12,7 @@ pub mod num;
 pub mod time;
 
 /// Error parsing formatted strings
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum ParseError {
     /// Parsing an empty string
     EmptyInput,

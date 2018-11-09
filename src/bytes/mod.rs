@@ -13,7 +13,7 @@
 //! assert_eq!(gigabytes2.unwrap().size(), 1 << 30);
 //! ```
 
-use super::num::{cast, Int};
+use super::num::Int;
 use std::fmt;
 use std::str::FromStr;
 use ParseError;
@@ -75,19 +75,19 @@ pub enum Unit {
 impl Unit {
     fn size<T: Int>(&self) -> Result<T, ParseError> {
         let v = match self {
-            Unit::Byte => cast(1),
-            Unit::KiByte => cast(IBYTES[1]),
-            Unit::MiByte => cast(IBYTES[2]),
-            Unit::GiByte => cast(IBYTES[3]),
-            Unit::TiByte => cast(IBYTES[4]),
-            Unit::PiByte => cast(IBYTES[5]),
-            Unit::EiByte => cast(IBYTES[6]),
-            Unit::KByte => cast(BYTES[1]),
-            Unit::MByte => cast(BYTES[2]),
-            Unit::GByte => cast(BYTES[3]),
-            Unit::TByte => cast(BYTES[4]),
-            Unit::PByte => cast(BYTES[5]),
-            Unit::EByte => cast(BYTES[6]),
+            Unit::Byte => <T>::from_u64(1),
+            Unit::KiByte => <T>::from_u64(IBYTES[1]),
+            Unit::MiByte => <T>::from_u64(IBYTES[2]),
+            Unit::GiByte => <T>::from_u64(IBYTES[3]),
+            Unit::TiByte => <T>::from_u64(IBYTES[4]),
+            Unit::PiByte => <T>::from_u64(IBYTES[5]),
+            Unit::EiByte => <T>::from_u64(IBYTES[6]),
+            Unit::KByte => <T>::from_u64(BYTES[1]),
+            Unit::MByte => <T>::from_u64(BYTES[2]),
+            Unit::GByte => <T>::from_u64(BYTES[3]),
+            Unit::TByte => <T>::from_u64(BYTES[4]),
+            Unit::PByte => <T>::from_u64(BYTES[5]),
+            Unit::EByte => <T>::from_u64(BYTES[6]),
         }.ok_or(ParseError::Overflow)?;
 
         Ok(v)
@@ -160,7 +160,7 @@ impl Bytes {
     /// [`ParseError::Overflow`]: ../enum.ParseError.html#variant.Overflow
     pub fn new<T: Int>(value: T, unit: Unit) -> Result<Bytes<T>, ParseError> {
         let unit_size = unit.size::<T>()?;
-        let size = value.checked_mul(&unit_size).ok_or(ParseError::Overflow)?;
+        let size = value.checked_mul(unit_size).ok_or(ParseError::Overflow)?;
 
         Ok(Bytes(size))
     }

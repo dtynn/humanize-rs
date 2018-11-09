@@ -4,7 +4,6 @@
 
 use std::error::Error;
 use std::fmt;
-extern crate num_traits;
 
 pub mod bytes;
 pub mod duration;
